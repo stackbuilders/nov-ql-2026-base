@@ -1,27 +1,29 @@
-import { FormEvent, useState } from 'react'
+import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { cargarParticipantes, guardarParticipantes, guardarResultado } from '../storage'
+import { useDependencias } from '../dependencias'
+import { elegirGanador } from '../sorteo/elegirGanador'
+import { agregarParticipante, quitarParticipante } from '../sorteo/participantes'
 
 export default function Sorteo() {
-  const [participantes, setParticipantes] = useState<string[]>(cargarParticipantes)
+  const { participantes: repositorio, resultados, aleatorio } = useDependencias()
+  const [participantes, setParticipantes] = useState<string[]>(() => repositorio.cargar())
   const [nombre, setNombre] = useState('')
   const navigate = useNavigate()
 
   const actualizar = (lista: string[]) => {
     setParticipantes(lista)
-    guardarParticipantes(lista)
+    repositorio.guardar(lista)
   }
 
   const agregar = (e: FormEvent) => {
     e.preventDefault()
-    const limpio = nombre.trim()
-    if (limpio) actualizar([...participantes, limpio])
+    actualizar(agregarParticipante(participantes, nombre))
     setNombre('')
   }
 
   const sortear = () => {
-    const ganador = participantes[Math.floor(Math.random() * participantes.length)]
-    guardarResultado({ ganador, participantes, fecha: new Date().toISOString() })
+    const ganador = elegirGanador(participantes, aleatorio)
+    resultados.guardar({ ganador, participantes, fecha: new Date().toISOString() })
     navigate('/ganador')
   }
 
@@ -47,7 +49,7 @@ export default function Sorteo() {
               {p}
               <button
                 className="link"
-                onClick={() => actualizar(participantes.filter((_, j) => j !== i))}
+                onClick={() => actualizar(quitarParticipante(participantes, i))}
                 aria-label={`Quitar ${p}`}
               >
                 ✕

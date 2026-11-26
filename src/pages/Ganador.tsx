@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
-import { cargarResultado } from '../storage'
+import { useDependencias } from '../dependencias'
 
 export default function Ganador() {
-  const resultado = cargarResultado()
+  const { resultados } = useDependencias()
+  const resultado = resultados.cargar()
 
   if (!resultado) {
     return (
