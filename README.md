@@ -27,6 +27,21 @@ npm install
 npx openspec --version
 ```
 
+## Comandos
+
+```sh
+npm run dev     # ejecutar la aplicación en local
+npm test        # ejecutar las pruebas automáticas (Vitest)
+npm run lint    # ejecutar el linter (ESLint)
+npm run build   # verificar tipos y generar la versión de producción
+```
+
+En GitHub Actions (`.github/workflows/ci.yml`) el linter, las pruebas y el build se ejecutan
+en cada `push` y en cada pull request hacia `main`. Si alguno falla, el workflow queda en rojo.
+
+> En Windows, ejecuta los comandos desde PowerShell o la terminal de VS Code; en Git Bash
+> `npm test` puede fallar por la forma de escribir la ruta.
+
 ## ¿Qué incluye?
 
 | Archivo / carpeta | Para qué sirve |

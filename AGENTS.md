@@ -10,6 +10,12 @@ Entrada: JSON de participantes. Salida: JSON del ganador, guardado aparte y most
 - Pruebas: `npm test` (Vitest)
 - Revisar: `npm run build` (incluye `tsc`) y `npm run lint`
 
+## Especificaciones (OpenSpec)
+- Todo cambio nuevo se especifica primero con OpenSpec: `/openspec-propose` → revisión → `/openspec-apply-change` → `/openspec-archive-change`.
+- No se escribe código de un cambio nuevo antes de que su propuesta esté revisada.
+- Los cambios en `openspec/` se hacen solo con ese flujo; las especificaciones se escriben en español.
+- Las pruebas verifican lo que dicen las especificaciones de `openspec/specs/`, no lo que hace el código.
+
 ## Pruebas
 - Todo cambio de comportamiento incluye pruebas automáticas.
 - Una tarea no está terminada si `npm test` o `npm run build` fallan.
@@ -39,7 +45,7 @@ Entrada: JSON de participantes. Salida: JSON del ganador, guardado aparte y most
 - Agregar dependencias sin preguntar.
 - Crear un backend ni usar servicios externos.
 - Cambiar el color base sin que el desarrollador lo pida.
-- Modificar `openspec/`, `.agents/` o los workflows de CI sin que se lo pidan.
+- Modificar `.agents/` o los workflows de CI sin que se lo pidan, ni `openspec/` fuera del flujo de OpenSpec.
 - Hacer commit, push o `git reset --hard` sin que se lo pidan.
 - Dejar `console.log`, código comentado o archivos temporales.
 - Cambiar el comportamiento de la aplicación durante un refactor.
